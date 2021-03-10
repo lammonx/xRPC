@@ -28,3 +28,9 @@ hs_err_pid*
 *.iws
 *.iml
 *.ipr
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
