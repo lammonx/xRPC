@@ -5,7 +5,7 @@ import com.lammon.transport.RpcClientProxy;
 import com.lammon.rpcapi.IHelloService;
 
 /**
- * 说明
+ * 测试用客户端
  *
  * @author lammon
  * @date 2021/3/9

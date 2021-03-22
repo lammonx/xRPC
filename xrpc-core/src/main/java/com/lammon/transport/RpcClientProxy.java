@@ -11,7 +11,7 @@ import com.lammon.entity.RpcRequest;
 import java.util.UUID;
 
 /**
- * 说明
+ * 客户端的代理类
  *
  * @author lammon
  * @date 2021/3/9
@@ -30,11 +30,11 @@ public class RpcClientProxy implements InvocationHandler {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, this);
     }
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
         RpcRequest rpcRequest = RpcRequest.builder()
                 .interfaceName(method.getDeclaringClass().getName())
                 .methodName(method.getName())
-                .parameters(args)
+                .parameters(params)
                 .paramTypes(method.getParameterTypes())
                 .build();
         RpcClient rpcClient = new RpcClient();

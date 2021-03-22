@@ -12,6 +12,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 
+/**
+ * 服务端调用
+ *
+ * @author Lammon
+ * @date 2021/3/9
+ */
 public class WorkerThread implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(WorkerThread.class);
