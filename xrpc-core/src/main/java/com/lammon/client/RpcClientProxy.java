@@ -1,14 +1,11 @@
-package com.lammon.transport;
+package com.lammon.client;
 
 import com.lammon.entity.RpcResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import com.lammon.entity.RpcRequest;
-import java.util.UUID;
 
 /**
  * 客户端的代理类

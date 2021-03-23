@@ -31,7 +31,7 @@ public class RpcServer {
 
     public void register(Object service, int port) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            logger.info("服务器正在启动...");
+            logger.info("服务器正在运行...");
             Socket socket;
             while((socket = serverSocket.accept()) != null) {
                 logger.info("客户端连接！Ip为：" + socket.getInetAddress());

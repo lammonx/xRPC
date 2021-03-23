@@ -1,7 +1,7 @@
 package com.lammon.test;
 
 import com.lammon.rpcapi.HelloObject;
-import com.lammon.transport.RpcClientProxy;
+import com.lammon.client.RpcClientProxy;
 import com.lammon.rpcapi.IHelloService;
 
 /**
