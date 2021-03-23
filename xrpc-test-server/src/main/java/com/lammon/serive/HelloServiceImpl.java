@@ -1,4 +1,4 @@
-package com.lammon.test;
+package com.lammon.serive;
 
 import com.lammon.rpcapi.HelloObject;
 import com.lammon.rpcapi.IHelloService;
@@ -18,7 +18,7 @@ public class HelloServiceImpl implements IHelloService {
 
     @Override
     public String hello(HelloObject object) {
-        logger.info("接收到消息：{}", object.getMessage());
-        return "这是调用的返回值，id = " + object.getId();
+        logger.info("服务接收到消息：{}", object.getMessage());
+        return "这是调用服务的返回值，id = " + object.getId();
     }
 }

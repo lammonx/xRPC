@@ -14,8 +14,8 @@ import com.lammon.entity.RpcRequest;
  * @date 2021/3/9
  */
 public class RpcClientProxy implements InvocationHandler {
-    private String host;
-    private int port;
+    private final String host;
+    private final int port;
 
     public RpcClientProxy(String host, int port) {
         this.host = host;
@@ -26,8 +26,9 @@ public class RpcClientProxy implements InvocationHandler {
     public <T> T getProxy(Class<T> clazz) {
         return (T) Proxy.newProxyInstance(clazz.getClassLoader(), new Class<?>[]{clazz}, this);
     }
+
     @Override
-    public Object invoke(Object proxy, Method method, Object[] params) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] params) {
         RpcRequest rpcRequest = RpcRequest.builder()
                 .interfaceName(method.getDeclaringClass().getName())
                 .methodName(method.getName())
@@ -35,7 +36,7 @@ public class RpcClientProxy implements InvocationHandler {
                 .paramTypes(method.getParameterTypes())
                 .build();
         RpcClient rpcClient = new RpcClient();
-        return ((RpcResponse) rpcClient.sendRequest(rpcRequest, host, port)).getData();
+        return ((RpcResponse<?>) rpcClient.sendRequest(rpcRequest, host, port)).getData();
     }
 }
 

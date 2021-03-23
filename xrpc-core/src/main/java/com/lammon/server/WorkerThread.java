@@ -22,8 +22,8 @@ public class WorkerThread implements Runnable {
 
     private static final Logger logger = LoggerFactory.getLogger(WorkerThread.class);
 
-    private Socket socket;
-    private Object service;
+    private final Socket socket;
+    private final Object service;
 
     public WorkerThread(Socket socket, Object service) {
         this.socket = socket;
