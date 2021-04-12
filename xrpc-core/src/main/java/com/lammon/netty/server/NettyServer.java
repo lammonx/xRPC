@@ -4,6 +4,7 @@ import com.lammon.RpcServer;
 import com.lammon.codec.CommonDecoder;
 import com.lammon.codec.CommonEncoder;
 import com.lammon.serializer.JsonSerializer;
+import com.lammon.serializer.KryoSerializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -37,9 +38,10 @@ public class NettyServer implements RpcServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast(new CommonEncoder(new JsonSerializer()));
-                            pipeline.addLast(new CommonDecoder());
-                            pipeline.addLast(new NettyServerHandler());
+//                            pipeline.addLast(new CommonEncoder(new JsonSerializer()))
+                            pipeline.addLast(new CommonEncoder(new KryoSerializer()))
+                                    .addLast(new CommonDecoder())
+                                    .addLast(new NettyServerHandler());
                         }
                     });
             ChannelFuture future = serverBootstrap.bind(port).sync();
