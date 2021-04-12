@@ -1,7 +1,8 @@
-package com.lammon.server;
+package com.lammon.socket.server;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +19,9 @@ import java.net.Socket;
  * @author Lammon
  * @date 2021/3/9
  */
+@Slf4j
 public class WorkerThread implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(WorkerThread.class);
 
     private final Socket socket;
     private final Object service;
@@ -40,7 +41,7 @@ public class WorkerThread implements Runnable {
             objectOutputStream.writeObject(RpcResponse.success(returnObject));
             objectOutputStream.flush();
         } catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            logger.error("调用或发送时有错误发生：", e);
+            log.error("调用或发送时有错误发生：", e);
         }
     }
 

@@ -12,7 +12,6 @@
     <groupId>com.lammon.rpc</groupId>
     <artifactId>xrpc-test-server</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>com.lammon.rpc</groupId>

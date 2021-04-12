@@ -2,8 +2,7 @@ package com.lammon.registry;
 
 import com.lammon.enumeration.RpcError;
 import com.lammon.exception.RpcException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 import java.util.Set;
@@ -15,22 +14,23 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author lammon
  * @date 2021/3/23
  */
+@Slf4j
 public class DefaultServiceRegistry implements ServiceRegistry {
-    private static final Logger logger = LoggerFactory.getLogger(DefaultServiceRegistry.class);
 
     /**
      * 服务-服务提供
      * 接口名-实现类
+     * 保证全局唯一的注册信息
      */
-    private final Map<String, Object> serviceMap = new ConcurrentHashMap<>();
+    private static final Map<String, Object> serviceMap = new ConcurrentHashMap<>();
     /**
      * 已注册的服务
      */
-    private final Set<String> registeredService = ConcurrentHashMap.newKeySet();
+    private static final Set<String> registeredService = ConcurrentHashMap.newKeySet();
 
 
     @Override
-    public synchronized <T> void registry(T service) {
+    public synchronized <T> void register(T service) {
         String serviceName = service.getClass().getCanonicalName();
         if(registeredService.contains(serviceName)){
             return;
@@ -43,7 +43,7 @@ public class DefaultServiceRegistry implements ServiceRegistry {
         for(Class<?> i : interfaces) {
             serviceMap.put(i.getCanonicalName(), service);
         }
-        logger.info("向接口: {} 注册服务: {}", interfaces, serviceName);
+        log.info("向接口: {} 注册服务: {}", interfaces, serviceName);
     }
 
     @Override

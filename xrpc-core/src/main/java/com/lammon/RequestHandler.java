@@ -1,10 +1,9 @@
-package com.lammon.server;
+package com.lammon;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
 import com.lammon.enumeration.ResponseCode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -15,17 +14,16 @@ import java.lang.reflect.Method;
  * @author lammon
  * @date 2021/3/23
  */
+@Slf4j
 public class RequestHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
 
     public Object handle(RpcRequest rpcRequest, Object service) {
         Object result = null;
         try {
             result = invokeTargetMethod(rpcRequest, service);
-            logger.info("服务:{} 成功调用方法:{}", rpcRequest.getInterfaceName(), rpcRequest.getMethodName());
+            log.info("服务:{} 成功调用方法:{}", rpcRequest.getInterfaceName(), rpcRequest.getMethodName());
         } catch (IllegalAccessException | InvocationTargetException e) {
-            logger.error("调用或发送时有错误发生：", e);
+            log.error("调用或发送时有错误发生：", e);
         }
         return result;
     }

@@ -12,7 +12,7 @@ public interface ServiceRegistry {
      *
      * @param service 服务
      */
-    <T> void registry(T service);
+    <T> void register(T service);
 
     /**
      * 获取对应服务名的服务
