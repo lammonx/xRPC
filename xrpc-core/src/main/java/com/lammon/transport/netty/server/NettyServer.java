@@ -1,5 +1,6 @@
 package com.lammon.transport.netty.server;
 
+import com.lammon.hook.ShutdownHook;
 import com.lammon.transport.RpcServer;
 import com.lammon.codec.CommonDecoder;
 import com.lammon.codec.CommonEncoder;
@@ -62,6 +63,8 @@ public class NettyServer implements RpcServer {
                         }
                     });
             ChannelFuture future = serverBootstrap.bind(host, port).sync();
+            //添加注销服务的钩子，服务端关闭时才会执行
+            ShutdownHook.getShutdownHook().addClearAllHook();
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             log.error("启动服务器时有错误发生: ", e);

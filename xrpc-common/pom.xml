@@ -11,6 +11,14 @@
 
     <groupId>com.lammon.rpc</groupId>
     <artifactId>xrpc-common</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>1.4.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
