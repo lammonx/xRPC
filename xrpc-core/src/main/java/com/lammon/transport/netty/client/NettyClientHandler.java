@@ -1,4 +1,4 @@
-package com.lammon.netty.client;
+package com.lammon.transport.netty.client;
 
 import com.lammon.entity.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,7 +8,7 @@ import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Netty中处理RpcRequest的Handler
+ * 客户端处理传输的数据
  *
  * @author lammon
  * @date 2021/4/12

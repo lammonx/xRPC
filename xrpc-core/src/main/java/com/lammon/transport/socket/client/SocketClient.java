@@ -1,11 +1,12 @@
-package com.lammon.socket.client;
+package com.lammon.transport.socket.client;
 
-import com.lammon.RpcClient;
+import com.lammon.transport.RpcClient;
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
 import com.lammon.enumeration.ResponseCode;
 import com.lammon.enumeration.RpcError;
 import com.lammon.exception.RpcException;
+import com.lammon.serializer.CommonSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -51,5 +52,9 @@ public class SocketClient implements RpcClient {
             log.error("调用时有错误发生：", e);
             throw new RpcException("服务调用失败: ", e);
         }
+    }
+
+    @Override
+    public void setSerializer(CommonSerializer serializer) {
     }
 }

@@ -1,4 +1,4 @@
-package com.lammon.socket.server;
+package com.lammon.transport.socket.server;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;

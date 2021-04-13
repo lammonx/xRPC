@@ -1,20 +1,27 @@
 package com.lammon.client;
 
-import com.lammon.RpcClient;
-import com.lammon.netty.client.NettyClient;
+import com.lammon.transport.RpcClient;
+import com.lammon.transport.netty.client.NettyClient;
 import com.lammon.rpcapi.HelloObject;
 import com.lammon.rpcapi.IHelloService;
-import com.lammon.RpcClientProxy;
+import com.lammon.transport.RpcClientProxy;
+import com.lammon.serializer.KryoSerializer;
+import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author Lammon
+ */
+@Slf4j
 public class NettyTestClient {
 
     public static void main(String[] args) {
-        RpcClient client = new NettyClient("127.0.0.1", 9999);
+        RpcClient client = new NettyClient();
+        //获取代理类
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         IHelloService helloService = rpcClientProxy.getProxy(IHelloService.class);
-        HelloObject object = new HelloObject(12, "This is a message");
-        String res = helloService.hello(object);
-        System.out.println(res);
+        //调用服务
+        String res = helloService.hello(new HelloObject(12, "This is a message"));
+        log.info(res);
     }
 
 }

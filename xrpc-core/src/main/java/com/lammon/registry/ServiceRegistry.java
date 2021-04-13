@@ -1,24 +1,27 @@
 package com.lammon.registry;
 
+import java.net.InetSocketAddress;
+
 /**
- * 服务的注册接口
+ * 通用的服务注册及获取地址接口
  *
- * @author lammon
- * @date 2021/3/23
+ * @author Lammon
+ * @date 2021/4/13
  */
 public interface ServiceRegistry {
     /**
      * 服务的注册
      *
-     * @param service 服务
+     * @param serviceName 服务名
+     * @param inetSocketAddress 服务地址
      */
-    <T> void register(T service);
+    void register(String serviceName, InetSocketAddress inetSocketAddress);
 
     /**
-     * 获取对应服务名的服务
+     * 获取服务地址
      *
      * @param serviceName 服务名
-     * @return 对应服务
+     * @return 服务地址
      */
-    Object getService(String serviceName);
+    InetSocketAddress lookupService(String serviceName);
 }

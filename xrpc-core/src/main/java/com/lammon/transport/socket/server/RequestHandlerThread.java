@@ -1,9 +1,9 @@
-package com.lammon.socket.server;
+package com.lammon.transport.socket.server;
 
-import com.lammon.RequestHandler;
+import com.lammon.transport.RequestHandler;
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
-import com.lammon.registry.ServiceRegistry;
+import com.lammon.provider.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +24,12 @@ public class RequestHandlerThread implements Runnable {
 
     private final Socket socket;
     private final RequestHandler requestHandler;
-    private final ServiceRegistry serviceRegistry;
+    private final ServiceProvider serviceProvider;
 
-    public RequestHandlerThread(Socket socket, RequestHandler requestHandler, ServiceRegistry serviceRegistry) {
+    public RequestHandlerThread(Socket socket, RequestHandler requestHandler, ServiceProvider serviceProvider) {
         this.socket = socket;
         this.requestHandler = requestHandler;
-        this.serviceRegistry = serviceRegistry;
+        this.serviceProvider = serviceProvider;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class RequestHandlerThread implements Runnable {
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream())) {
             RpcRequest rpcRequest = (RpcRequest) objectInputStream.readObject();
             String interfaceName = rpcRequest.getInterfaceName();
-            Object service = serviceRegistry.getService(interfaceName);
+            Object service = serviceProvider.getServiceProvider(interfaceName);
             Object result = requestHandler.handle(rpcRequest, service);
             objectOutputStream.writeObject(RpcResponse.success(result));
             objectOutputStream.flush();

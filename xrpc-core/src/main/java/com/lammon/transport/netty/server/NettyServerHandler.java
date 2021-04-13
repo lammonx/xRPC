@@ -1,10 +1,10 @@
-package com.lammon.netty.server;
+package com.lammon.transport.netty.server;
 
-import com.lammon.RequestHandler;
+import com.lammon.transport.RequestHandler;
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
-import com.lammon.registry.DefaultServiceRegistry;
-import com.lammon.registry.ServiceRegistry;
+import com.lammon.provider.DefaultServiceProvider;
+import com.lammon.provider.ServiceProvider;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -13,7 +13,7 @@ import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 说明
+ * 服务端处理传输的数据
  *
  * @author lammon
  * @date 2021/4/12
@@ -22,11 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     private static RequestHandler requestHandler;
-    private static ServiceRegistry serviceRegistry;
+    private static ServiceProvider serviceProvider;
 
     static {
         requestHandler = new RequestHandler();
-        serviceRegistry = new DefaultServiceRegistry();
+        serviceProvider = new DefaultServiceProvider();
     }
 
     @Override
@@ -34,7 +34,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> 
         try {
             log.info("服务器接收到请求：{}", msg);
             String interfaceName = msg.getInterfaceName();
-            Object service = serviceRegistry.getService(interfaceName);
+            Object service = serviceProvider.getServiceProvider(interfaceName);
             Object result = requestHandler.handle(msg, service);
             ChannelFuture channelFuture = ctx.writeAndFlush(RpcResponse.success(result));
             channelFuture.addListener(ChannelFutureListener.CLOSE);

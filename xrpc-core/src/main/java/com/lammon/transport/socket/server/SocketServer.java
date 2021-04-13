@@ -1,8 +1,9 @@
-package com.lammon.socket.server;
+package com.lammon.transport.socket.server;
 
-import com.lammon.RequestHandler;
-import com.lammon.RpcServer;
-import com.lammon.registry.ServiceRegistry;
+import com.lammon.transport.RequestHandler;
+import com.lammon.transport.RpcServer;
+import com.lammon.provider.ServiceProvider;
+import com.lammon.serializer.CommonSerializer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -25,27 +26,54 @@ public class SocketServer implements RpcServer {
     private static final int BLOCKING_QUEUE_CAPACITY = 100;
     private final ExecutorService threadPool;
     private final RequestHandler requestHandler = new RequestHandler();
-    private final ServiceRegistry serviceRegistry;
+    private final ServiceProvider serviceProvider;
 
-    public SocketServer(ServiceRegistry serviceRegistry) {
-        this.serviceRegistry = serviceRegistry;
+    public SocketServer(ServiceProvider serviceProvider) {
+        this.serviceProvider = serviceProvider;
         BlockingQueue<Runnable> workingQueue = new ArrayBlockingQueue<>(BLOCKING_QUEUE_CAPACITY);
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
         threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, workingQueue, threadFactory);
     }
 
-    public void start(int port) {
+//    @Override
+//    public void start(int port) {
+//        try (ServerSocket serverSocket = new ServerSocket(port)) {
+//            log.info("服务器正在运行...");
+//            Socket socket;
+//            while((socket = serverSocket.accept()) != null) {
+//                log.info("客户端连接！Ip为:{}:{}", socket.getInetAddress(), socket.getPort());
+//                threadPool.execute(new RequestHandlerThread(socket, requestHandler, serviceLocalRegistry));
+//            }
+//            threadPool.shutdown();
+//        } catch (IOException e) {
+//            log.error("连接时有错误发生：", e);
+//        }
+//    }
+
+    @Override
+    public void start() {
+        int port = 9999;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             log.info("服务器正在运行...");
             Socket socket;
             while((socket = serverSocket.accept()) != null) {
                 log.info("客户端连接！Ip为:{}:{}", socket.getInetAddress(), socket.getPort());
-                threadPool.execute(new RequestHandlerThread(socket, requestHandler, serviceRegistry));
+                threadPool.execute(new RequestHandlerThread(socket, requestHandler, serviceProvider));
             }
             threadPool.shutdown();
         } catch (IOException e) {
             log.error("连接时有错误发生：", e);
         }
+    }
+
+    @Override
+    public <T> void publishService(Object service, Class<T> serviceClass) {
+
+    }
+
+    @Override
+    public void setSerializer(CommonSerializer serializer) {
+
     }
 
 }

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 状态码枚举
+ * 相应的状态码枚举
  *
  * @author lammon
  * @date 2021/3/9

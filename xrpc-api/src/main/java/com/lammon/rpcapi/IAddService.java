@@ -12,5 +12,5 @@ public interface IAddService {
      * @param a 任意数字
      * @return 参数加一的值
      */
-    int add(int a);
+    int addOne(int a);
 }

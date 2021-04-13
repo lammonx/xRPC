@@ -13,6 +13,9 @@ import lombok.Getter;
 @Getter
 public enum SerializerCode {
 
+    /**
+     * 序列化协议
+     */
     KRYO(0),
     JSON(1);
 

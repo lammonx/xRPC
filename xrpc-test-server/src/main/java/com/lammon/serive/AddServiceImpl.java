@@ -10,7 +10,7 @@ import com.lammon.rpcapi.IAddService;
  */
 public class AddServiceImpl implements IAddService {
     @Override
-    public int add(int a) {
+    public int addOne(int a) {
         return a + 1;
     }
 }

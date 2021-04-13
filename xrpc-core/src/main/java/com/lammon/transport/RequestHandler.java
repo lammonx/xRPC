@@ -1,4 +1,4 @@
-package com.lammon;
+package com.lammon.transport;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
