@@ -11,6 +11,7 @@ import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
 import com.lammon.remoting.transport.RpcClient;
 import com.lammon.remoting.transport.netty.client.NettyClient;
+import com.lammon.utils.RpcMessageChecker;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -38,18 +39,19 @@ public class RpcClientProxy implements InvocationHandler {
         log.info("调用方法: {}#{}", method.getDeclaringClass().getName(), method.getName());
         RpcRequest rpcRequest = new RpcRequest(UUID.randomUUID().toString(),method.getDeclaringClass().getName(),
                 method.getName(), params, method.getParameterTypes(),false);
-        Object result = null;
+        RpcResponse rpcResponse = null;
         if(client instanceof NettyClient){
             //异步获取调用结果
             CompletableFuture<RpcResponse> completableFuture = (CompletableFuture<RpcResponse>)client.sendRequest(rpcRequest);
             try {
-                result= completableFuture.get().getData();
+                rpcResponse = completableFuture.get();
             }catch (InterruptedException | ExecutionException e){
                 log.error("方法调用请求发送失败", e);
                 return null;
             }
         }
-        return result;
+        RpcMessageChecker.check(rpcRequest, rpcResponse);
+        return rpcResponse.getData();
     }
 }
 
