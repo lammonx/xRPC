@@ -1,5 +1,7 @@
 package com.lammon.serializer;
 
+import com.lammon.enumeration.SerializerCode;
+
 /**
  * 通用的序列化反序列化接口
  *
@@ -8,7 +10,7 @@ package com.lammon.serializer;
  */
 public interface CommonSerializer {
 
-    CommonSerializer DEFALUT_SERIALIZER = CommonSerializer.getByCode(0);
+    int DEFALUT_SERIALIZER = SerializerCode.KRYO.getCode();
 
     byte[] serialize(Object object);
 

@@ -28,8 +28,8 @@ public class NettyClient implements RpcClient {
         this(CommonSerializer.DEFALUT_SERIALIZER);
     }
 
-    public NettyClient(CommonSerializer serviceDiscovery) {
-        this.serializer = serviceDiscovery;
+    public NettyClient(int serializerCode) {
+        this.serializer = CommonSerializer.getByCode(serializerCode);
         this.serviceDiscovery = new NacosServiceDiscovery();
     }
 

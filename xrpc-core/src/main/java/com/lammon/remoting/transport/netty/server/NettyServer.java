@@ -16,9 +16,11 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Netty方式服务端的实现
@@ -38,12 +40,12 @@ public class NettyServer implements RpcServer {
         this(host, port, CommonSerializer.DEFALUT_SERIALIZER);
     }
 
-    public NettyServer(String host, int port, CommonSerializer serializer) {
+    public NettyServer(String host, int port, int serializerCode) {
         this.host = host;
         this.port = port;
         serviceRegistry = new NacosServiceRegistry();
         serviceProvider = new DefaultServiceProvider();
-        this.serializer = serializer;
+        this.serializer = CommonSerializer.getByCode(serializerCode);
     }
 
     @Override
@@ -62,7 +64,9 @@ public class NettyServer implements RpcServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                            pipeline.addLast(new CommonEncoder(serializer))
+                            //设定IdleStateHandler心跳检测每30秒进行一次读检测，如果30秒内ChannelRead()方法未被调用则触发一次userEventTrigger()方法
+                            pipeline.addLast(new IdleStateHandler(30, 0, 0, TimeUnit.SECONDS))
+                                    .addLast(new CommonEncoder(serializer))
                                     .addLast(new CommonDecoder())
                                     .addLast(new NettyServerHandler());
                         }
