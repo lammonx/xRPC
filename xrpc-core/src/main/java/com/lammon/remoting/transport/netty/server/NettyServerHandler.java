@@ -10,6 +10,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.logging.Handler;
+
 /**
  * 服务端处理传输的数据
  *
@@ -19,17 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class NettyServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
-    private static final RequestHandler requestHandler;
+    private static final RequestHandler REQUEST_HANDLER;
 
     static {
-        requestHandler = new RequestHandler();
+        REQUEST_HANDLER = new RequestHandler();
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, RpcRequest msg) throws Exception {
         try {
             log.info("服务器接收到请求：{}", msg);
-            Object result = requestHandler.handle(msg);
+            Object result = REQUEST_HANDLER.handle(msg);
             ChannelFuture channelFuture = ctx.writeAndFlush(RpcResponse.success(result, msg.getRequestId()));
             channelFuture.addListener(ChannelFutureListener.CLOSE);
         } finally {

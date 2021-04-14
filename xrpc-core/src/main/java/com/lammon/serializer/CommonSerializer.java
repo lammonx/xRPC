@@ -8,7 +8,7 @@ package com.lammon.serializer;
  */
 public interface CommonSerializer {
 
-    public static final CommonSerializer DEFALUT_SERIALIZER = CommonSerializer.getByCode(0);
+    CommonSerializer DEFALUT_SERIALIZER = CommonSerializer.getByCode(0);
 
     byte[] serialize(Object object);
 

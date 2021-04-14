@@ -26,9 +26,9 @@ public class CommonDecoder extends ReplayingDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        int magic_num = in.readInt();
-        if (magic_num != MAGIC_NUMBER) {
-            log.error("拒绝识别的协议包：{}", magic_num);
+        int magicNum = in.readInt();
+        if (magicNum != MAGIC_NUMBER) {
+            log.error("拒绝识别的协议包：{}", magicNum);
             throw new RpcException(RpcError.UNKNOWN_PROTOCOL);
         }
         int packageCode = in.readInt();
