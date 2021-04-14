@@ -4,8 +4,6 @@ import com.lammon.factory.ThreadPoolFactory;
 import com.lammon.utils.NacosUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.ExecutorService;
-
 /**
  * 说明
  *
@@ -14,7 +12,6 @@ import java.util.concurrent.ExecutorService;
  */
 @Slf4j
 public class ShutdownHook {
-    private final ExecutorService threadPool = ThreadPoolFactory.createDefaultThreadPool("shutdown-hook");
     /**
      *单例模式创建钩子，保证全局只有这一个钩子
      */

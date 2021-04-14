@@ -35,12 +35,14 @@ public class RpcResponse<T> implements Serializable {
         RpcResponse<T> response = new RpcResponse<>();
         response.setStatusCode(ResponseCode.SUCCESS.getCode());
         response.setData(data);
+        response.setRequestId(requestId);
         return response;
     }
     public static <T> RpcResponse<T> fail(ResponseCode code, String requestId) {
         RpcResponse<T> response = new RpcResponse<>();
         response.setStatusCode(code.getCode());
         response.setMessage(code.getMessage());
+        response.setRequestId(requestId);
         return response;
     }
 }

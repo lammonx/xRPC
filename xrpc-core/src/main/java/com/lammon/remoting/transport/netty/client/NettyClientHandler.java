@@ -2,6 +2,7 @@ package com.lammon.remoting.transport.netty.client;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
+import com.lammon.factory.SingletonFactory;
 import com.lammon.serializer.CommonSerializer;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -23,6 +24,12 @@ import java.net.InetSocketAddress;
  */
 @Slf4j
 public class NettyClientHandler extends SimpleChannelInboundHandler<RpcResponse>  {
+
+    private final UnprocessedRequests unprocessedRequests;
+
+    public NettyClientHandler(){
+        unprocessedRequests = SingletonFactory.getInstance(UnprocessedRequests.class);
+    }
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
@@ -46,9 +53,8 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<RpcResponse>
     protected void channelRead0(ChannelHandlerContext ctx, RpcResponse msg) throws Exception {
         try {
             log.info(String.format("客户端接收到消息：%s", msg));
-            AttributeKey<RpcResponse> key = AttributeKey.valueOf("RpcResponse");
-            ctx.channel().attr(key).set(msg);
-            ctx.channel().close();
+            //将响应数据取出
+            unprocessedRequests.complete(msg);
         }finally {
             ReferenceCountUtil.release(msg);
         }

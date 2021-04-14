@@ -22,6 +22,7 @@ public class NacosServiceDiscovery implements ServiceDiscovery{
         try {
             //根据服务名获取某个服务的<所有>提供者
             List<Instance> instances = NacosUtil.getAllInstance(serviceName);
+            //未判空和负载均衡
             Instance instance = instances.get(0);
             return new InetSocketAddress(instance.getIp(), instance.getPort());
         } catch (NacosException e) {
