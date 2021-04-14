@@ -1,4 +1,4 @@
-package com.lammon.codec;
+package com.lammon.remoting.codec;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.enumeration.PackageType;

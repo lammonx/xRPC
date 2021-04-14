@@ -1,4 +1,4 @@
-package com.lammon.rpcapi;
+package com.lammon.api.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

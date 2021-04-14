@@ -1,9 +1,9 @@
-package com.lammon.transport.netty.server;
+package com.lammon.remoting.transport.netty.server;
 
 import com.lammon.hook.ShutdownHook;
-import com.lammon.transport.RpcServer;
-import com.lammon.codec.CommonDecoder;
-import com.lammon.codec.CommonEncoder;
+import com.lammon.remoting.transport.RpcServer;
+import com.lammon.remoting.codec.CommonDecoder;
+import com.lammon.remoting.codec.CommonEncoder;
 import com.lammon.provider.DefaultServiceProvider;
 import com.lammon.registry.NacosServiceRegistry;
 import com.lammon.provider.ServiceProvider;
@@ -32,13 +32,18 @@ public class NettyServer implements RpcServer {
     private final int port;
     private final ServiceRegistry serviceRegistry;
     private final ServiceProvider serviceProvider;
-    private CommonSerializer serializer = CommonSerializer.getByCode(0);
+    private final CommonSerializer serializer;
 
     public NettyServer(String host, int port) {
+        this(host, port, CommonSerializer.DEFALUT_SERIALIZER);
+    }
+
+    public NettyServer(String host, int port, CommonSerializer serializer) {
         this.host = host;
         this.port = port;
         serviceRegistry = new NacosServiceRegistry();
         serviceProvider = new DefaultServiceProvider();
+        this.serializer = serializer;
     }
 
     @Override
@@ -51,7 +56,7 @@ public class NettyServer implements RpcServer {
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
                     .option(ChannelOption.SO_BACKLOG, 256)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
+                    .option(ChannelOption.SO_KEEPALIVE, true)
                     .childOption(ChannelOption.TCP_NODELAY, true)
                     .childHandler(new ChannelInitializer<SocketChannel>(){
                         @Override
@@ -79,10 +84,5 @@ public class NettyServer implements RpcServer {
         serviceProvider.addServiceProvider(service);
         serviceRegistry.register(serviceClass.getCanonicalName(), new InetSocketAddress(host, port));
         start();
-    }
-
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
     }
 }

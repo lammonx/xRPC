@@ -1,6 +1,6 @@
-package com.lammon.transport.socket.client;
+package com.lammon.remoting.transport.socket.client;
 
-import com.lammon.transport.RpcClient;
+import com.lammon.remoting.transport.RpcClient;
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
 import com.lammon.enumeration.ResponseCode;

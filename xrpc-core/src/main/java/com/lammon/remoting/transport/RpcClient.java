@@ -1,4 +1,4 @@
-package com.lammon.transport;
+package com.lammon.remoting.transport;
 
 import com.lammon.entity.RpcRequest;
 import com.lammon.serializer.CommonSerializer;
@@ -17,6 +17,4 @@ public interface RpcClient {
      * @return
      */
     Object sendRequest(RpcRequest rpcRequest);
-
-    void setSerializer(CommonSerializer serializer);
 }

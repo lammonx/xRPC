@@ -1,9 +1,12 @@
-package com.lammon.transport;
+package com.lammon.remoting.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.UUID;
+
 import com.lammon.entity.RpcRequest;
+import com.lammon.remoting.transport.RpcClient;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,7 +32,7 @@ public class RpcClientProxy implements InvocationHandler {
     @Override
     public Object invoke(Object proxy, Method method, Object[] params) {
         log.info("调用方法: {}#{}", method.getDeclaringClass().getName(), method.getName());
-        RpcRequest rpcRequest = new RpcRequest(method.getDeclaringClass().getName(),
+        RpcRequest rpcRequest = new RpcRequest(UUID.randomUUID().toString(),method.getDeclaringClass().getName(),
                 method.getName(), params, method.getParameterTypes());
         return client.sendRequest(rpcRequest);
     }

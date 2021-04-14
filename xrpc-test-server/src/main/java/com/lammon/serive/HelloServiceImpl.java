@@ -1,7 +1,7 @@
 package com.lammon.serive;
 
-import com.lammon.rpcapi.HelloObject;
-import com.lammon.rpcapi.IHelloService;
+import com.lammon.api.service.HelloObject;
+import com.lammon.api.service.IHelloService;
 import lombok.extern.slf4j.Slf4j;
 
 /**

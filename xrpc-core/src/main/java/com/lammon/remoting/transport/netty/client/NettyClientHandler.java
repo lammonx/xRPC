@@ -1,4 +1,4 @@
-package com.lammon.transport.netty.client;
+package com.lammon.remoting.transport.netty.client;
 
 import com.lammon.entity.RpcResponse;
 import io.netty.channel.ChannelHandlerContext;

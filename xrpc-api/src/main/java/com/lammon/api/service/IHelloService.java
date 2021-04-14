@@ -1,4 +1,4 @@
-package com.lammon.rpcapi;
+package com.lammon.api.service;
 
 /**
  * 测试用hello服务接口

@@ -1,7 +1,7 @@
-package com.lammon.transport.netty.client;
+package com.lammon.remoting.transport.netty.client;
 
-import com.lammon.codec.CommonDecoder;
-import com.lammon.codec.CommonEncoder;
+import com.lammon.remoting.codec.CommonDecoder;
+import com.lammon.remoting.codec.CommonEncoder;
 import com.lammon.enumeration.RpcError;
 import com.lammon.exception.RpcException;
 import com.lammon.serializer.CommonSerializer;

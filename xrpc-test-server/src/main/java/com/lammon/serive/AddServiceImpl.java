@@ -1,6 +1,6 @@
 package com.lammon.serive;
 
-import com.lammon.rpcapi.IAddService;
+import com.lammon.api.service.IAddService;
 
 /**
  * Add服务的实现

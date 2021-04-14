@@ -1,4 +1,4 @@
-package com.lammon.transport;
+package com.lammon.remoting.transport;
 
 import com.lammon.serializer.CommonSerializer;
 
@@ -9,6 +9,7 @@ import com.lammon.serializer.CommonSerializer;
  * @date 2021/4/12
  */
 public interface RpcServer {
+
     /**
      * 启动服务器
      *
@@ -23,6 +24,4 @@ public interface RpcServer {
      * @param <T> 某
      */
     <T> void publishService(Object service, Class<T> serviceClass);
-
-    void setSerializer(CommonSerializer serializer);
 }

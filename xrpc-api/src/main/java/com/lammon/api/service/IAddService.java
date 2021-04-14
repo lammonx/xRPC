@@ -1,4 +1,4 @@
-package com.lammon.rpcapi;
+package com.lammon.api.service;
 
 /**
  * add服务的接口

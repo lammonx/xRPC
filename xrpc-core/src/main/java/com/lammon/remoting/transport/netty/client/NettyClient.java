@@ -1,10 +1,10 @@
-package com.lammon.transport.netty.client;
+package com.lammon.remoting.transport.netty.client;
 
-import com.lammon.transport.RpcClient;
+import com.lammon.registry.NacosServiceDiscovery;
+import com.lammon.registry.ServiceDiscovery;
+import com.lammon.remoting.transport.RpcClient;
 import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
-import com.lammon.registry.NacosServiceRegistry;
-import com.lammon.registry.ServiceRegistry;
 import com.lammon.serializer.CommonSerializer;
 import io.netty.channel.*;
 import io.netty.util.AttributeKey;
@@ -21,18 +21,25 @@ import java.net.InetSocketAddress;
 @Slf4j
 public class NettyClient implements RpcClient {
 
-    private final ServiceRegistry serviceRegistry;
-    private CommonSerializer serializer = CommonSerializer.getByCode(0);
+    private final ServiceDiscovery serviceDiscovery;
+    private final CommonSerializer serializer;
 
     public NettyClient() {
-        this.serviceRegistry = new NacosServiceRegistry();
+        this(CommonSerializer.DEFALUT_SERIALIZER);
     }
+
+    public NettyClient(CommonSerializer serviceDiscovery) {
+        this.serializer = serviceDiscovery;
+        this.serviceDiscovery = new NacosServiceDiscovery();
+    }
+
+
 
 
     @Override
     public Object sendRequest(RpcRequest rpcRequest) {
         try {
-            InetSocketAddress inetSocketAddress = serviceRegistry.lookupService(rpcRequest.getInterfaceName());
+            InetSocketAddress inetSocketAddress = serviceDiscovery.lookupService(rpcRequest.getInterfaceName());
             Channel channel = ClientChannelProvider.getChannel(inetSocketAddress, serializer);
             if(channel.isActive()){
                 channel.writeAndFlush(rpcRequest).addListener(future -> {
@@ -51,10 +58,5 @@ public class NettyClient implements RpcClient {
             log.error("发送消息时有错误发生：", e);
         }
         return null;
-    }
-
-    @Override
-    public void setSerializer(CommonSerializer serializer) {
-        this.serializer = serializer;
     }
 }

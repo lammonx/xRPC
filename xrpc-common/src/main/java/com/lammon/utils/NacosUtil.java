@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +22,7 @@ import java.util.Set;
 @Slf4j
 public class NacosUtil {
     private static final NamingService namingService;
-    private static final Set<String> serviceNames = new HashSet<>();
+    private static final Set<String> SERVICE_NAMES = new HashSet<>();
     private static InetSocketAddress address;
     private static final String SERVER_ADDR = "127.0.0.1:8848";
 
@@ -51,25 +50,24 @@ public class NacosUtil {
         namingService.registerInstance(serviceName, address.getHostName(), address.getPort());
         NacosUtil.address = address;
         //保存注册的服务名
-        serviceNames.add(serviceName);
+        SERVICE_NAMES.add(serviceName);
     }
 
     /**
-     * 获取指定服务名的全部服务地址
+     * 获取提供该服务的全部服务地址
      */
     public static List<Instance> getAllInstance(String serviceName) throws NacosException {
         return namingService.getAllInstances(serviceName);
     }
 
     /**
-     * 注销服务
+     * 注销记录的所有服务
      */
-    public static void clearRegistry() {
-        if(!serviceNames.isEmpty() && address != null) {
+    public static void logoutService() {
+        if(!SERVICE_NAMES.isEmpty() && address != null) {
             String host = address.getHostName();
             int port = address.getPort();
-            //利用迭代器迭代注销
-            for (String serviceName : serviceNames) {
+            for (String serviceName : SERVICE_NAMES) {
                 try {
                     //注销服务
                     namingService.deregisterInstance(serviceName, host, port);
