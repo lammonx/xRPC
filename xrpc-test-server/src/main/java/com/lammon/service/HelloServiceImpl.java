@@ -1,5 +1,6 @@
-package com.lammon.serive;
+package com.lammon.service;
 
+import com.lammon.annotation.Service;
 import com.lammon.api.service.HelloObject;
 import com.lammon.api.service.IHelloService;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  * @date 2021/3/9
  */
 @Slf4j
+@Service
 public class HelloServiceImpl implements IHelloService {
 
 

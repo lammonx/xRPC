@@ -9,10 +9,10 @@ import com.lammon.remoting.transport.netty.server.NettyServer;
  */
 //不指定扫描的包默认扫描启动类所在的包
 @ServiceScan(servicePackage = "com.lammon.service")
-public class NettyTestServer {
+public class NettyTestServer2 {
 
     public static void main(String[] args) {
-        RpcServer server = new NettyServer("127.0.0.1", 6666);
+        RpcServer server = new NettyServer("127.0.0.1", 9999);
         server.start();
     }
 
