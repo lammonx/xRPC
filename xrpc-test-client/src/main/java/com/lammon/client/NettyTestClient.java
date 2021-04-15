@@ -20,10 +20,8 @@ public class NettyTestClient {
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         IHelloService helloService = rpcClientProxy.getProxy(IHelloService.class);
         IAddService addService = rpcClientProxy.getProxy(IAddService.class);
-        //调用服务
-        String res = helloService.hello(new HelloObject(12, "This is a message"));
+        String res = helloService.hello(new HelloObject(666, "Hello MY RPC!!"));
         log.info(res);
-        //调用服务
         int res2 = addService.addOne(665);
         log.info(String.valueOf(res2));
     }
