@@ -14,7 +14,7 @@ import lombok.Getter;
 public enum ResponseCode {
 
     /**
-     * 两种状态码的四种情况
+     * 状态码的几种情况
      */
     SUCCESS(200,"调用方法成功"),
     FAIL(500,"调用方法失败"),

@@ -14,9 +14,12 @@ import lombok.Getter;
 public enum SerializerCode {
 
     /**
-     * 序列化协议
+     * Kryo序列化协议
      */
     KRYO(0),
+    /**
+     * Jackson序列化协议
+     */
     JSON(1);
 
     private final int code;

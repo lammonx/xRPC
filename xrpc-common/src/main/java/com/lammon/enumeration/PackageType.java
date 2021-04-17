@@ -13,10 +13,13 @@ import lombok.Getter;
 @Getter
 public enum PackageType {
     /**
-     * 前者为请求包
-     * 后者为响应包
+     * 请求包
      */
     REQUEST_PACK(0),
+    /**
+     *
+     * 响应包
+     */
     RESPONSE_PACK(1);
 
     private final int code;
