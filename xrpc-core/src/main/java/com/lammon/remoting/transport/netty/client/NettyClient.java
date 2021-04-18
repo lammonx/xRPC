@@ -8,7 +8,6 @@ import com.lammon.entity.RpcRequest;
 import com.lammon.entity.RpcResponse;
 import com.lammon.serializer.CommonSerializer;
 import io.netty.channel.*;
-import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
