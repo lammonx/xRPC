@@ -13,6 +13,7 @@ import com.lammon.remoting.transport.netty.server.NettyServer;
 public class NettyTestServer {
 
     public static void main(String[] args) {
+        //服务地址
         RpcServer server = new NettyServer("127.0.0.1", 6666);
         server.start();
     }

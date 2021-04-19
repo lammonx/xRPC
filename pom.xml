@@ -23,6 +23,7 @@
     </properties>
 
     <build>
+        <!-- 设置源文件编码方式 -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -30,6 +31,7 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -52,5 +54,4 @@
             <version>1.7.30</version>
         </dependency>
     </dependencies>
-
 </project>

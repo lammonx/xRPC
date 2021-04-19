@@ -82,7 +82,8 @@ public class NettyServer extends AbstractRpcServer {
                         }
                     });
             //绑定端口，启动Netty，sync()代表阻塞主Server线程，以执行Netty线程，如果不阻塞Netty就直接被下面shutdown了
-            ChannelFuture future = serverBootstrap.bind(host, port).sync();
+            //默认监听0.0.0.0:port
+            ChannelFuture future = serverBootstrap.bind(port).sync();
             //等确定通道关闭了，关闭future回到主Server线程
             future.channel().closeFuture().sync();
         }catch (InterruptedException e){
