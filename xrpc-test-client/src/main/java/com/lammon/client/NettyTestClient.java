@@ -17,11 +17,13 @@ public class NettyTestClient {
     public static void main(String[] args) {
         RpcClient client = new NettyClient();
         //获取代理类
+        //测试hello服务
         RpcClientProxy rpcClientProxy = new RpcClientProxy(client);
         IHelloService helloService = rpcClientProxy.getProxy(IHelloService.class);
-        IAddService addService = rpcClientProxy.getProxy(IAddService.class);
         String res = helloService.hello(new HelloObject(666, "Hello MY RPC!!"));
         log.info(res);
+        //测试add服务
+        IAddService addService = rpcClientProxy.getProxy(IAddService.class);
         int res2 = addService.addOne(665);
         log.info(String.valueOf(res2));
     }
